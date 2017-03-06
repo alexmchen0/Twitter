@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		6E6C5684E9CB832A5D41BDC0 /* Pods_Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E5340D3A5246C07BE916E16 /* Pods_Twitter.framework */; };
+		FA3147651E64EE1C00701F35 /* TweetDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3147641E64EE1C00701F35 /* TweetDetailViewController.swift */; };
+		FA3147821E6A967F00701F35 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3147811E6A967F00701F35 /* ProfileViewController.swift */; };
+		FA3147841E6A96B300701F35 /* ComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3147831E6A96B300701F35 /* ComposeViewController.swift */; };
 		FA3B71261E4EEF930073694C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3B71251E4EEF930073694C /* AppDelegate.swift */; };
 		FA3B712B1E4EEF930073694C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA3B71291E4EEF930073694C /* Main.storyboard */; };
 		FA3B712D1E4EEF930073694C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA3B712C1E4EEF930073694C /* Assets.xcassets */; };
@@ -23,6 +26,9 @@
 		001ED4A9120E75188B0E2DF5 /* Pods-Twitter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Twitter.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Twitter/Pods-Twitter.debug.xcconfig"; sourceTree = "<group>"; };
 		7E5340D3A5246C07BE916E16 /* Pods_Twitter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Twitter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6D31CC1BE33A8E59117F2D6 /* Pods-Twitter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Twitter.release.xcconfig"; path = "Pods/Target Support Files/Pods-Twitter/Pods-Twitter.release.xcconfig"; sourceTree = "<group>"; };
+		FA3147641E64EE1C00701F35 /* TweetDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetDetailViewController.swift; sourceTree = "<group>"; };
+		FA3147811E6A967F00701F35 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		FA3147831E6A96B300701F35 /* ComposeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeViewController.swift; sourceTree = "<group>"; };
 		FA3B71221E4EEF930073694C /* Twitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twitter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA3B71251E4EEF930073694C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA3B712A1E4EEF930073694C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -112,6 +118,9 @@
 			children = (
 				FA3B71371E4EF7FF0073694C /* LoginViewController.swift */,
 				FA3B71441E52A4500073694C /* TweetsViewController.swift */,
+				FA3147641E64EE1C00701F35 /* TweetDetailViewController.swift */,
+				FA3147811E6A967F00701F35 /* ProfileViewController.swift */,
+				FA3147831E6A96B300701F35 /* ComposeViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -260,6 +269,9 @@
 				FA3B713F1E527D610073694C /* Tweet.swift in Sources */,
 				FA3B71381E4EF7FF0073694C /* LoginViewController.swift in Sources */,
 				FA3B71451E52A4500073694C /* TweetsViewController.swift in Sources */,
+				FA3147841E6A96B300701F35 /* ComposeViewController.swift in Sources */,
+				FA3147651E64EE1C00701F35 /* TweetDetailViewController.swift in Sources */,
+				FA3147821E6A967F00701F35 /* ProfileViewController.swift in Sources */,
 				FA3B71411E5287180073694C /* TwitterClient.swift in Sources */,
 				FA3B71261E4EEF930073694C /* AppDelegate.swift in Sources */,
 			);

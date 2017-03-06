@@ -11,7 +11,7 @@ import UIKit
 
 class Tweet: NSObject {
     
-    var text: String?
+    var text: String
     var retweeted: Bool
     var retweetCount: Int = 0
     var favorited: Bool
@@ -59,9 +59,32 @@ class Tweet: NSObject {
             }
         }
     }
+    var timeStampLongText: String {
+        get {
+            let calendar = Calendar.current
+            let TSYear = calendar.component(.year, from: timeStamp)
+            let TSMonth = calendar.component(.month, from: timeStamp)
+            let TSDay = calendar.component(.day, from: timeStamp)
+            let TSHour = calendar.component(.hour, from: timeStamp)
+            let TSMinute = calendar.component(.minute, from: timeStamp)
+            
+            var hour = TSHour
+            var AMPM: String
+            if hour < 12 {
+                if hour == 0 {
+                    hour = 12
+                }
+                AMPM = "AM"
+            } else {
+                hour -= 12
+                AMPM = "PM"
+            }
+            return "\(TSMonth)/\(TSDay)/\(TSYear), \(TSHour):\(TSMinute) \(AMPM)"
+        }
+    }
     
     init(dictionary: NSDictionary) {
-        text = dictionary["text"] as? String
+        text = dictionary["text"] as! String
         retweetCount = (dictionary["retweet_count"] as? Int) ?? 0
         favoriteCount = (dictionary["favorite_count"] as? Int) ?? 0
 

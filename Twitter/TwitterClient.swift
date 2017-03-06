@@ -81,6 +81,22 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
+    func getUser(userID: Int, success: @escaping (User) -> (), failure: @escaping (Error) -> ()) {
+        print("will call")
+        get("1.1/users/show.json", parameters: ["user_id": userID], progress: nil, success: { (task, response) in
+            print("success?!")
+            let dictionary = response as! NSDictionary
+            let user = User(dictionary: dictionary)
+            print("got user profile!:\n\(user.dictionary)")
+            success(user)
+            
+        }, failure: { (task, error) in
+            print("failure?!")
+            failure(error)
+        })
+        print("did call")
+    }
+    
     func favoriteTweet(success: @escaping (Tweet) -> (), failure: @escaping (Error) -> (), tweetId: Int) {
         post("1.1/favorites/create.json", parameters: ["id": tweetId], progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
             let dictionary = response as! NSDictionary

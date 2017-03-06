@@ -9,8 +9,10 @@
 import UIKit
 
 class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    var tweets: [Tweet]!
+    
     @IBOutlet weak var tableView: UITableView!
+    
+    var tweets: [Tweet]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +25,6 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         TwitterClient.sharedInstance?.homeTimeline(success: { (tweets: [Tweet]) in
             self.tweets = tweets
             self.tableView.reloadData()
-            
         }, failure: { (error) in
             print("\(error.localizedDescription)");
         })
@@ -53,18 +54,37 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         cell.tweet = tweets[indexPath.row]
         cell.selectionStyle = .none
+        cell.profileButton.tag = indexPath.row
+
         
         return cell
     }
-
-    /*
+    
     // MARK: - Navigation
-
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        print("preparing for segue: \(segue.identifier!)")
+        if (segue.identifier == "TweetDetailsSegue") {
+            let cell = sender as! UITableViewCell
+            let indexPath = tableView.indexPath(for: cell)
+            let tweet = tweets[indexPath!.row]
+            
+            let tweetDetailVC = segue.destination as! TweetDetailViewController
+            tweetDetailVC.tweet = tweet
+            
+        } else if (segue.identifier == "ProfileSegue") {
+            let indexPathRow = (sender as! UIButton).tag
+            let tweet = tweets[indexPathRow];
+            
+            let profileVC = segue.destination as! ProfileViewController
+            profileVC.user = tweet.author
+            
+        } else if (segue.identifier == "ReplySegue") {
+            let indexPathRow = (sender as! UIButton).tag
+            let tweet = tweets[indexPathRow];
+            
+            let composeVC = segue.destination as! ComposeViewController
+            composeVC.startingText = "@\(tweet.author.screenName)"
+        }
     }
-    */
-
 }

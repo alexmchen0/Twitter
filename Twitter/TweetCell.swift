@@ -19,12 +19,13 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var retweetCountLabel: UILabel!
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var favoriteCountLabel: UILabel!
+    @IBOutlet weak var profileButton: UIButton!
     
     var tweet: Tweet! {
         didSet {
-            userImageView.setImageWith(tweet.author.profileURL!)
+            userImageView.setImageWith(tweet.author.userImageURL)
             nameLabel.text = tweet.author.name
-            screenNameLabel.text = "@\(tweet.author.screenName!)"
+            screenNameLabel.text = "@\(tweet.author.screenName)"
             timeStampLabel.text = tweet.timeStampText
             tweetTextLabel.text = tweet.text
 
@@ -58,7 +59,7 @@ class TweetCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    @IBAction func onRetweet(_ sender: Any) {
+    @IBAction func onRetweetButton(_ sender: Any) {
         TwitterClient.sharedInstance?.retweetTweet(success: { (tweet: Tweet) in
             self.retweetCountLabel.text = "\(tweet.retweetCount)"
             self.retweetButton.setImage(#imageLiteral(resourceName: "retweet-icon-green"), for: UIControlState.normal)
@@ -67,8 +68,8 @@ class TweetCell: UITableViewCell {
             // self.unretweetTweet()
         }, tweetId: tweet.id)
     }
-    
-    @IBAction func onFavorite(_ sender: Any) {
+
+    @IBAction func onFavoriteButton(_ sender: Any) {
         TwitterClient.sharedInstance?.favoriteTweet(success: { (tweet: Tweet) in
             self.tweet = tweet
         }, failure: { (error: Error) in
