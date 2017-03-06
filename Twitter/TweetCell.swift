@@ -20,6 +20,7 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var favoriteCountLabel: UILabel!
     @IBOutlet weak var profileButton: UIButton!
+    @IBOutlet weak var replyButton: UIButton!
     
     var tweet: Tweet! {
         didSet {

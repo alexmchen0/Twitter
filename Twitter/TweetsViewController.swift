@@ -29,6 +29,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             print("\(error.localizedDescription)");
         })
 
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadTimeline), name: NSNotification.Name(rawValue: "reload"), object: nil)
         // Do any additional setup after loading the view.
     }
 
@@ -55,9 +56,19 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cell.tweet = tweets[indexPath.row]
         cell.selectionStyle = .none
         cell.profileButton.tag = indexPath.row
+        cell.replyButton.tag = indexPath.row
 
         
         return cell
+    }
+    
+    func reloadTimeline(notification: Notification) {
+        TwitterClient.sharedInstance?.homeTimeline(success: { (tweets: [Tweet]) in
+            self.tweets = tweets
+            self.tableView.reloadData()
+        }, failure: { (error: Error) in
+            print(error.localizedDescription)
+        })
     }
     
     // MARK: - Navigation

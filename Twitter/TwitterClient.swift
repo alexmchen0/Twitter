@@ -81,7 +81,7 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
-    func getUser(userID: Int, success: @escaping (User) -> (), failure: @escaping (Error) -> ()) {
+    func getUser(success: @escaping (User) -> (), failure: @escaping (Error) -> (), userID: Int) {
         print("will call")
         get("1.1/users/show.json", parameters: ["user_id": userID], progress: nil, success: { (task, response) in
             print("success?!")
@@ -132,5 +132,14 @@ class TwitterClient: BDBOAuth1SessionManager {
         }) { (task: URLSessionDataTask?, error: Error) in
             failure(error)
         }
+    }
+    
+    func postTweet(success: @escaping () -> (), failure: @escaping (Error) -> (), status: String) {
+        post("1.1/statuses/update.json", parameters: ["status": status], progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
+            print("posted tweet!! \(status)")
+            success()
+        }, failure: { (task: URLSessionDataTask?, error: Error) in
+            failure(error)
+        })
     }
 }

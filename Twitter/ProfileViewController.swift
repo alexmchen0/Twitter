@@ -58,6 +58,6 @@ class ProfileViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Compose stuff
         let composeVC = segue.destination as! ComposeViewController
-        composeVC.startingText = "\(user.screenName)"
+        composeVC.startingText = "@\(user.screenName)"
     }
 }

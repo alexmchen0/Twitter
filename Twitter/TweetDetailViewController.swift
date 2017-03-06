@@ -61,6 +61,7 @@ class TweetDetailViewController: UIViewController {
         TwitterClient.sharedInstance?.retweetTweet(success: { (tweet: Tweet) in
             self.retweetCountLabel.text = "\(tweet.retweetCount)"
             self.retweetButton.setImage(#imageLiteral(resourceName: "retweet-icon-green"), for: UIControlState.normal)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)
         }, failure: { (error: Error) in
             print("error: \(error.localizedDescription)")
             // self.unretweetTweet()
@@ -72,6 +73,7 @@ class TweetDetailViewController: UIViewController {
         TwitterClient.sharedInstance?.favoriteTweet(success: { (tweet: Tweet) in
             self.favoriteCountLabel.text = "\(tweet.favoriteCount)"
             self.favoriteButton.setImage(#imageLiteral(resourceName: "favor-icon-red"), for: UIControlState.normal)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)
         }, failure: { (error: Error) in
             self.unfavoriteTweet()
         }, tweetId: tweet.id)
@@ -81,6 +83,7 @@ class TweetDetailViewController: UIViewController {
         TwitterClient.sharedInstance?.unfavoriteTweet(success: { (tweet: Tweet) in
             self.favoriteCountLabel.text = "\(tweet.favoriteCount)"
             self.favoriteButton.setImage(#imageLiteral(resourceName: "favor-icon"), for: UIControlState.normal)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)
         }, failure: { (error: Error) in
             print("error: \(error.localizedDescription)")
         }, tweetId: tweet.id)
