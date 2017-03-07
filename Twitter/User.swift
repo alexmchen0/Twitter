@@ -18,39 +18,15 @@ class User: NSObject {
     var tagLine: String
     var followingCount: Int = 0
     var followingString: String {
-        get {
-            if followingCount >= 1000000 {
-                return "\(Double(followingCount/100000).rounded()/10)m"
-            } else if followingCount >= 1000 {
-                return "\(Double(followingCount/100).rounded()/10)k"
-            } else {
-                return "\(followingCount)"
-            }
-        }
+        return formatCount(count: followingCount)
     }
     var followersCount: Int = 0
     var followersString: String {
-        get {
-            if followersCount >= 1000000 {
-                return "\(Double(followersCount/100000).rounded()/10)m"
-            } else if followersCount >= 1000 {
-                return "\(Double(followersCount/100).rounded()/10)k"
-            } else {
-                return "\(followersCount)"
-            }
-        }
+        return formatCount(count: followersCount)
     }
     var tweetsCount: Int = 0
     var tweetsString: String {
-        get {
-            if tweetsCount >= 1000000 {
-                return "\(Double(tweetsCount/100000).rounded()/10)m"
-            } else if tweetsCount >= 1000 {
-                return "\(Double(tweetsCount/100).rounded()/10)k"
-            } else {
-                return "\(tweetsCount)"
-            }
-        }
+        return formatCount(count: tweetsCount)
     }
 
     
@@ -96,6 +72,16 @@ class User: NSObject {
                 defaults.removeObject(forKey: "currentUserData")
             }
             defaults.synchronize()
+        }
+    }
+    
+    func formatCount(count: Int) -> String {
+        if count >= 1000000 {
+            return "\(Double(count/100000).rounded()/10)m"
+        } else if count >= 1000 {
+            return "\(Double(count/100).rounded()/10)k"
+        } else {
+            return "\(count)"
         }
     }
 }

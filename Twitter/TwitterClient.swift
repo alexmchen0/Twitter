@@ -97,38 +97,25 @@ class TwitterClient: BDBOAuth1SessionManager {
         print("did call")
     }
     
-    func favoriteTweet(success: @escaping (Tweet) -> (), failure: @escaping (Error) -> (), tweetId: Int) {
+    func favoriteTweet(success: @escaping () -> (), failure: @escaping (Error) -> (), tweetId: Int) {
         post("1.1/favorites/create.json", parameters: ["id": tweetId], progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
-            let dictionary = response as! NSDictionary
-            let tweet = Tweet(dictionary: dictionary)
-            
-            success(tweet)
-            
+            success()
         }) { (task: URLSessionDataTask?, error: Error) in
             failure(error)
         }
     }
     
-    func unfavoriteTweet(success: @escaping (Tweet) -> (), failure: @escaping (Error) -> (), tweetId: Int) {
+    func unfavoriteTweet(success: @escaping () -> (), failure: @escaping (Error) -> (), tweetId: Int) {
         post("1.1/favorites/destroy.json", parameters: ["id": tweetId], progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
-            let dictionary = response as! NSDictionary
-            let tweet = Tweet(dictionary: dictionary)
-            
-            success(tweet)
-            
+            success()
         }) { (task: URLSessionDataTask?, error: Error) in
             failure(error)
         }
     }
     
-    func retweetTweet(success: @escaping (Tweet) -> (), failure: @escaping (Error) -> (), tweetId: Int) {
+    func retweetTweet(success: @escaping () -> (), failure: @escaping (Error) -> (), tweetId: Int) {
         post("1.1/statuses/retweet/\(tweetId).json", parameters: nil, progress: nil, success: { (task: URLSessionDataTask, response: Any?) in
-            
-            let dictionary = response as! NSDictionary
-            let tweet = Tweet(dictionary: dictionary)
-            tweet.retweeted = true
-            success(tweet)
-            
+            success()
         }) { (task: URLSessionDataTask?, error: Error) in
             failure(error)
         }

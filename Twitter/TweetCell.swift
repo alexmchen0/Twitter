@@ -24,6 +24,7 @@ class TweetCell: UITableViewCell {
     
     var tweet: Tweet! {
         didSet {
+            // Set up UI elements
             userImageView.setImageWith(tweet.author.userImageURL)
             nameLabel.text = tweet.author.name
             screenNameLabel.text = "@\(tweet.author.screenName)"
@@ -56,13 +57,14 @@ class TweetCell: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
         // Configure the view for the selected state
     }
     
     @IBAction func onRetweetButton(_ sender: Any) {
-        TwitterClient.sharedInstance?.retweetTweet(success: { (tweet: Tweet) in
-            self.retweetCountLabel.text = "\(tweet.retweetCount)"
+        TwitterClient.sharedInstance?.retweetTweet(success: { () in
+            self.tweet.retweetCount += 1
+            self.tweet.retweeted = true
+            self.retweetCountLabel.text = "\(self.tweet.retweetCount)"
             self.retweetButton.setImage(#imageLiteral(resourceName: "retweet-icon-green"), for: UIControlState.normal)
         }, failure: { (error: Error) in
             print("error: \(error.localizedDescription)")
@@ -71,16 +73,22 @@ class TweetCell: UITableViewCell {
     }
 
     @IBAction func onFavoriteButton(_ sender: Any) {
-        TwitterClient.sharedInstance?.favoriteTweet(success: { (tweet: Tweet) in
-            self.tweet = tweet
+        TwitterClient.sharedInstance?.favoriteTweet(success: { () in
+            self.tweet.favoriteCount += 1
+            self.tweet.favorited = true
+            self.favoriteCountLabel.text = "\(self.tweet.favoriteCount)"
+            self.favoriteButton.setImage(#imageLiteral(resourceName: "favor-icon-red"), for: UIControlState.normal)
         }, failure: { (error: Error) in
             self.unfavoriteTweet()
         }, tweetId: tweet.id)
     }
     
     func unfavoriteTweet() {
-        TwitterClient.sharedInstance?.unfavoriteTweet(success: { (tweet: Tweet) in
-            self.tweet = tweet
+        TwitterClient.sharedInstance?.unfavoriteTweet(success: { () in
+            self.tweet.favoriteCount -= 1
+            self.tweet.favorited = false
+            self.favoriteCountLabel.text = "\(self.tweet.favoriteCount)"
+            self.favoriteButton.setImage(#imageLiteral(resourceName: "favor-icon"), for: UIControlState.normal)
         }, failure: { (error: Error) in
             print("error: \(error.localizedDescription)")
         }, tweetId: tweet.id)

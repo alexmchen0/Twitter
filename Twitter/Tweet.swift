@@ -52,8 +52,8 @@ class Tweet: NSObject {
                         if TSHour != hour {
                             return "\(hour - TSHour)h"
                         } else {
-                            if minute == TSMinute {
-                                return "Just now"
+                            if minute - TSMinute == 0 {
+                                return "Now"
                             }
                             return "\(minute - TSMinute)m"
                         }

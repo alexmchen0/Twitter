@@ -26,6 +26,9 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         tweetTextField.delegate = self
         
         userImageView.setImageWith((User.currentUser?.userImageURL)!)
+        userImageView.layer.cornerRadius = 5
+        userImageView.clipsToBounds = true
+        
         nameLabel.text = User.currentUser?.name
         screenNameLabel.text = "@\(User.currentUser!.screenName)"
         

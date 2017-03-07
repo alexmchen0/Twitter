@@ -26,6 +26,7 @@ class TweetDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Set up UI elements
         userImageView.setImageWith(tweet.author.userImageURL)
         userImageView.layer.cornerRadius = 5
         userImageView.clipsToBounds = true
@@ -58,10 +59,11 @@ class TweetDetailViewController: UIViewController {
     
     
     @IBAction func onRetweetButton(_ sender: Any) {
-        TwitterClient.sharedInstance?.retweetTweet(success: { (tweet: Tweet) in
-            self.retweetCountLabel.text = "\(tweet.retweetCount)"
+        TwitterClient.sharedInstance?.retweetTweet(success: { () in
+            self.tweet.retweetCount += 1
+            self.tweet.retweeted = true
+            self.retweetCountLabel.text = "\(self.tweet.retweetCount)"
             self.retweetButton.setImage(#imageLiteral(resourceName: "retweet-icon-green"), for: UIControlState.normal)
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)
         }, failure: { (error: Error) in
             print("error: \(error.localizedDescription)")
             // self.unretweetTweet()
@@ -70,32 +72,33 @@ class TweetDetailViewController: UIViewController {
     }
     
     @IBAction func onFavoriteButton(_ sender: Any) {
-        TwitterClient.sharedInstance?.favoriteTweet(success: { (tweet: Tweet) in
-            self.favoriteCountLabel.text = "\(tweet.favoriteCount)"
+        TwitterClient.sharedInstance?.favoriteTweet(success: { () in
+            self.tweet.favoriteCount += 1
+            self.tweet.favorited = true
+            self.favoriteCountLabel.text = "\(self.tweet.favoriteCount)"
             self.favoriteButton.setImage(#imageLiteral(resourceName: "favor-icon-red"), for: UIControlState.normal)
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)
         }, failure: { (error: Error) in
             self.unfavoriteTweet()
         }, tweetId: tweet.id)
     }
   
     func unfavoriteTweet() {
-        TwitterClient.sharedInstance?.unfavoriteTweet(success: { (tweet: Tweet) in
-            self.favoriteCountLabel.text = "\(tweet.favoriteCount)"
+        TwitterClient.sharedInstance?.unfavoriteTweet(success: { () in
+            self.tweet.favoriteCount -= 1
+            self.tweet.favorited = false
+            self.favoriteCountLabel.text = "\(self.tweet.favoriteCount)"
             self.favoriteButton.setImage(#imageLiteral(resourceName: "favor-icon"), for: UIControlState.normal)
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)
         }, failure: { (error: Error) in
             print("error: \(error.localizedDescription)")
         }, tweetId: tweet.id)
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Compose stuff
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) { 
         print("preparing for segue \(segue.identifier)")
         if segue.identifier == "ProfileSegue" {
             let profileVC = segue.destination as! ProfileViewController
             profileVC.user = tweet.author
-        } else {
+        } else if segue.identifier == "ComposeSegue" {
             let composeVC = segue.destination as! ComposeViewController
             composeVC.startingText = "@\(tweet.author.screenName)"
         }
